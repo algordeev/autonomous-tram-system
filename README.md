@@ -1,6 +1,6 @@
 ![Logo](images/logo.jpg)
 
-[![Watch the video](https://img.youtube.com/vi/tfnsq6qUQj4/images/logo.jpg)](https://youtu.be/tfnsq6qUQj4)
+[![Watch the video](https://img.youtube.com/vi/tfnsq6qUQj4/maxresdefault.jpg)](https://youtu.be/tfnsq6qUQj4)
 
 ## Overview
 
