@@ -1,4 +1,6 @@
-![Logo](images/logo.jpg)
+<p align="center">
+  <img src="images/tram_with_remote.jpg" alt="Tram and Remote Controller Prototype" width="1000%">
+</p>
 
 ## Overview
 
