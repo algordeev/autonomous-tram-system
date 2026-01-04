@@ -1,8 +1,6 @@
 ![Logo](images/logo.jpg)
 
-## Project Demo
-
-[![Watch the video](https://img.youtube.com/vi/yuEvH8Pw2kI/maxresdefault.jpg)](https://www.youtube.com/watch?v=yuEvH8Pw2kI)
+<img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="20" style="vertical-align: middle;" /> [Watch the Project Demo on YouTube](https://youtu.be/yuEvH8Pw2kI)
 
 ## Overview
 
