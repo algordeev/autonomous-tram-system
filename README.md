@@ -1,82 +1,156 @@
-<div align="center">
-  <img src="images/logo.jpg" alt="Autonomous Tram System Banner" width="100%" />
-  
-  <h1>Autonomous Tram System with Kinetic Energy Recovery (KERS)</h1>
-  
-  <p>
-    <b>An autonomous urban rail prototype featuring Vehicle-to-Infrastructure (V2I) communication, smart traffic priority algorithms, and a mechanical regenerative braking system.</b>
-  </p>
+![Logo](images/logo.jpg)
 
-  <p>
-    <img src="https://img.shields.io/badge/Language-C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B" />
-    <img src="https://img.shields.io/badge/Hardware-Arduino_%7C_Custom_PCB-00979D?style=for-the-badge&logo=arduino" />
-    <img src="https://img.shields.io/badge/Mechanism-Flywheel_KERS-orange?style=for-the-badge&logo=mechanical-keyboard" />
-    <img src="https://img.shields.io/badge/Award-WRO_2021_International_Finalist-gold?style=for-the-badge&logo=google-scholar" />
-  </p>
-</div>
+## Overview
 
----
+This project is a fully autonomous tram system prototype developed individually
 
-## 📖 Overview
-This project addresses the energy inefficiency of urban stop-and-go transport. It is a fully functional **1:20 scale prototype** of an autonomous tram network that integrates **mechanical energy recovery** and **smart traffic management** to reduce power consumption.
+as an embedded systems engineering project.
 
-Unlike standard line-followers, this system uses **V2I (Vehicle-to-Infrastructure)** communication to actively control traffic lights, creating a "Green Wave" for the tram to minimize braking events.
 
-> 🏆 **Achievements:**
-> * **International Finalist:** World Robot Olympiad (WRO) 2021
-> * **2nd Place:** Baltic Science and Engineering Competition
-> * **1st Place:** All-Russian Festival "Vector"
 
-## ⚙️ Engineering Architecture
+The system demonstrates autonomous vehicle control, infrastructure automation,
 
-### 1. The "Green Wave" Algorithm (V2I)
-The core software innovation is the **Predictive Priority System**.
-* **Logic:** The tram transmits its velocity and distance to upcoming traffic nodes via **NRF24L01** radio modules.
-* **Action:** The traffic light controller calculates the tram's arrival time and preemptively switches the signal to GREEN.
-* **Result:** Eliminates unnecessary stops at intersections, preserving momentum and reducing energy spikes by up to **30%**.
+and energy efficiency solutions for urban rail transport under real-time and
 
-### 2. Kinetic Energy Recovery System (KERS)
-To address energy loss during mandatory stops (stations), I engineered a hybrid recovery system:
-* **Mechanical Flywheel:** A custom-designed **mechanical variator** connects a heavy flywheel to the drivetrain. During braking, the flywheel spins up (storing kinetic energy). During acceleration, this energy is mechanically transferred back to the wheels.
-* **Electrical Buffer:** Supercapacitors were analyzed to handle voltage spikes during regenerative braking phases.
+hardware constraints.
 
-### 3. Distributed Hardware Control
-The system operates on a decentralized architecture with custom PCBs:
-* **Main Unit:** Arduino Nano (Tram Controller) handling PID speed control and sensor fusion.
-* **Infrastructure Nodes:** Independent MCUs for Traffic Lights and Track Switches.
-* **Sensors:**
-    * **VL53L0X (ToF LiDAR):** High-precision distance measurement for station docking (~2mm accuracy).
-    * **Reed Switches:** Magnetic positioning for track segmentation.
-    * **Encoders:** Real-time odometry for speed calculation.
 
-## 🔋 Energy & Efficiency Analysis
-Research conducted during the project demonstrated that the combination of **Smart Traffic Logic** and **KERS** could theoretically reduce total network energy consumption significantly compared to standard non-connected transport systems.
 
-* **Auxiliary Power:** The station models feature piezoelectric elements under the platform to harvest energy from passenger foot traffic, powering local lighting.
+The prototype includes automated tram control, traffic lights, switches, stops,
 
-## 🧠 Technical Challenges Solved
+and an energy recovery concept implemented using embedded systems.
 
-| Challenge | Engineering Solution |
-| :--- | :--- |
-| **Momentum Conservation** | Replaced standard worm gears with a custom **low-friction gearbox** to maximize coasting distance. |
-| **Communication Conflicts** | Implemented a custom packet structure over NRF24L01 to prevent data collisions between multiple infrastructure nodes. |
-| **Precision Docking** | Used a closed-loop control system (LiDAR + PID) to ensure the tram aligns perfectly with station doors. |
 
-## 🛠️ Retrospective: v2.0 Roadmap
-*Writing this as a Computer Engineering student looking back:*
-* **Upgrade Comms:** Transition from NRF24L01 to **ESP32/Wi-Fi (MQTT)** for IoT integration and telemetry logging.
-* **Refine KERS:** Replace the mechanical variator with an **Electronic KERS** (Motor as Generator -> Supercapacitor Bank -> Buck-Boost Converter) for higher efficiency and fewer moving parts.
-* **State Management:** Implement a formal **FreeRTOS** architecture to handle multiple real-time tasks (comms, motor control, sensing) more robustly.
 
-## 📂 Repository Structure
-```bash
-├── firmware/
-│   ├── tram_main/             # PID Logic & NRF Comms
-│   ├── infrastructure/        # Smart Traffic Light Logic
-│   └── libraries/             # Custom VL53L0X wrapper
-├── hardware/
-│   ├── pcb/                   # EasyEDA Gerber files
-│   └── mechanical/            # STL files for Flywheel & Chassis
-└── docs/
-    ├── research_paper.pdf     # Full WRO Report
-    └── schematics/            # Circuit Diagrams
+## Objectives
+
+- Develop autonomous and remote tram control
+
+- Automate tram infrastructure (switches, traffic lights, stops)
+
+- Build a working physical prototype
+
+- Analyze energy consumption and recovery in tram systems
+
+
+
+## Hardware
+
+- Arduino Nano (multiple controllers)
+
+- Motor driver: TB6612FNG
+
+- Wireless communication: NRF24L01
+
+- Laser rangefinder: VL53L0X
+
+- Reed switches, potentiometers
+
+- Servo motors (switches)
+
+- DC motor with gearbox
+
+- Custom PCB (designed in EasyEDA)
+
+- 3D-printed tram body, rails, infrastructure
+
+
+
+## Software
+
+- Language: C++
+
+- Platform: Arduino
+
+- Modular control logic for tram and infrastructure
+
+- Real-time loop-based control without external frameworks
+
+
+
+## System Architecture
+
+The system uses multiple Arduino controllers responsible for:
+
+- Tram movement and obstacle detection
+
+- Switch and traffic light control
+
+- Stop management and intervals
+
+- Emergency and manual override
+
+
+
+Wireless communication ensures coordination between tram and infrastructure.
+
+
+
+## Key Algorithms and Logic
+
+- Autonomous navigation along rails
+
+- Obstacle detection and emergency stop using laser rangefinder
+
+- Fixed-interval tram scheduling independent of entry point
+
+- Fail-safe logic with manual control fallback
+
+- Anti-jam door control system
+
+
+
+## Energy Efficiency Concepts
+
+- Regenerative braking with flywheel energy storage (FES)
+
+- Energy harvesting at stops using piezoelectric elements
+
+- Solar panels on stops for auxiliary power
+
+- Analysis of braking energy reuse for tram acceleration
+
+
+
+## Challenges and Engineering Decisions
+
+- Sensor noise handled with thresholding and filtering
+
+- Real-time constraints addressed by optimized control loops
+
+- Safety prioritized through manual override and system isolation
+
+- Cost optimization using low-cost embedded components
+
+
+
+## Results
+
+- Fully working autonomous tram prototype
+
+- Automated infrastructure interaction
+
+- Demonstrated feasibility of energy recovery
+
+
+
+## What I Would Improve Today
+
+- Transition to a formal state machine architecture
+
+- More robust sensor fusion
+
+- CAN or RS485 instead of NRF for industrial reliability
+
+- Improved modularity and scalability
+
+
+
+## Background
+
+This project was originally developed as an individual robotics competition project.
+
+It won the national World Robot Olympiad (WRO) final in Russia and was later presented
+
+at the international WRO 2021 final, where I represented my country.
+
