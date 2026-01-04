@@ -4,17 +4,11 @@
 
 ## Overview
 
-This project is a fully autonomous tram system prototype developed individually
-
-as an embedded systems engineering project.
+This project is a fully autonomous tram system prototype developed individually as an embedded systems engineering project.
 
 
 
-The system demonstrates autonomous vehicle control, infrastructure automation,
-
-and energy efficiency solutions for urban rail transport under real-time and
-
-hardware constraints.
+The system demonstrates autonomous vehicle control, infrastructure automation, and energy efficiency solutions for urban rail transport under real-time and hardware constraints.
 
 
 
