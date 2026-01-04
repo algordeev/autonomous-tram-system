@@ -1,5 +1,5 @@
 # Autonomous and Energy-Efficient Tram System  
-
+![Logo](images/logo.jpg)
 ## Overview
 This project is a fully autonomous tram system prototype developed individually
 as an embedded systems engineering project.
