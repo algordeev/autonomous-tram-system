@@ -72,6 +72,7 @@ I significantly modified and expanded upon the base design to support the projec
     * Traffic Lights
     * RFID Sensor Mounts
     * Rail Cross-Intersections
+    * Remote controller case
 
 
 ## Software
