@@ -78,7 +78,7 @@ I significantly modified and expanded upon the base design to support the projec
     * Remote controller case
 
 <p align="center">
-  <img src="images/tram_with_remote.jpg" alt="Tram and Remote Controller Prototype" width="70%">
+  <img src="images/tram_with_remote.jpg" alt="Tram and Remote Controller Prototype" width="80%">
 </p>
 
 
