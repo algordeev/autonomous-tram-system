@@ -30,7 +30,7 @@ The prototype includes automated tram control, traffic lights, switches, stops, 
 
 ## Hardware
 
-![Project Composition Breakdown](images/project_composition.jpg)
+![Project Composition Breakdown](images/project_composition.png)
 
 - Arduino Nano (multiple controllers)
 
