@@ -63,8 +63,8 @@ The physical prototype is constructed using a hybrid of open-source assets and c
 The base design for the **Tram Body** and **Rails** was created by **Depronized**.
 * **Sources:**
   * [Tram Body (Thingiverse)](https://www.thingiverse.com/thing:3194215)
-  * [Rail System (Thingiverse)](https://www.thingiverse.com/thing:2146361)
-  * [Rail Accessories (Thingiverse)](https://www.thingiverse.com/thing:2619888)
+  * [Rails (Thingiverse)](https://www.thingiverse.com/thing:2146361)
+  * [Track Switch (Thingiverse)](https://www.thingiverse.com/thing:2619888)
 * **License:** CC BY-NC 4.0
 * *Note: 3D model files (original or modified) are not included in this repository to respect the licensing terms. Please refer to the source links above for the original designs.*
 
