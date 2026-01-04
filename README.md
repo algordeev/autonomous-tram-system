@@ -30,6 +30,8 @@ The prototype includes automated tram control, traffic lights, switches, stops, 
 
 ## Hardware
 
+![Project Composition Breakdown](images/project_composition.jpg)
+
 - Arduino Nano (multiple controllers)
 
 - Motor driver: TB6612FNG
