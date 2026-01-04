@@ -1,5 +1,7 @@
 ![Logo](images/logo.jpg)
 
+[![Watch the video](https://img.youtube.com/vi/tfnsq6qUQj4/maxresdefault.jpg)](https://youtu.be/tfnsq6qUQj4)
+
 ## Overview
 
 This project is a fully autonomous tram system prototype developed individually
