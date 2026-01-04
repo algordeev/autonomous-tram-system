@@ -1,6 +1,8 @@
 ![Logo](images/logo.jpg)
 
-[![Watch the demonstation video](https://img.youtube.com/vi/tfnsq6qUQj4/maxresdefault.jpg)](https://youtu.be/tfnsq6qUQj4)
+## Project Demo
+
+[![Watch the video](https://img.youtube.com/vi/yuEvH8Pw2kI/maxresdefault.jpg)](https://www.youtube.com/watch?v=yuEvH8Pw2kI)
 
 ## Overview
 
