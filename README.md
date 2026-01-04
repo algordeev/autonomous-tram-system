@@ -60,8 +60,8 @@ and an energy recovery concept implemented using embedded systems.
 The physical prototype is constructed using a hybrid of open-source assets and custom-engineered parts.
 
 **External Assets (Tram & Rails)**
-The base design for the **Tram Body** and **Rails** was created by **[Depronized]**.
-* **Source:** [https://www.thingiverse.com/thing:3194215]
+The base design for the **Tram Body** and **Rails** was created by **Depronized**.
+* **Source:** https://www.thingiverse.com/thing:3194215
 * **License:** CC BY-NC 4.0
 * *Note: The original model files for these specific parts are not hosting in this repository to respect the licensing terms.*
 
