@@ -75,4 +75,4 @@ Wireless communication ensures coordination between tram and infrastructure.
 ## Background
 This project was originally developed as an individual robotics competition project.
 It won the national World Robot Olympiad (WRO) final in Russia and was later presented
-at the international WRO 2021 final, where the author represented Russia.
+at the international WRO 2021 final, where I represented my country.
