@@ -61,7 +61,7 @@ void loop()
 if(joystick[2]==0)
 {
      
-    if(!joystick[1])//avtovedenie
+    if(!joystick[1]) // autopilot
     {
       
     if(joystick[0]==0)
@@ -86,10 +86,10 @@ if(!joystick[3])
 
      
     }  
-    else //Автоведение
+    else // autopilot
     { 
       
-  if(sensor.readRangeSingleMillimeters()>70) //Лазерник
+  if(sensor.readRangeSingleMillimeters()>70) // laser rangefinder
   {
 analogWrite(pwmA,55);
     digitalWrite(a2,LOW);
@@ -102,7 +102,7 @@ analogWrite(pwmA,55);
   }
 
  
-  if(analogRead(gerk) == 0)//Геркон
+  if(analogRead(gerk) == 0)// reed switch
      {
       analogWrite(pwmA,20);
     digitalWrite(a2,LOW);
@@ -135,3 +135,4 @@ else
   
 
   }
+
