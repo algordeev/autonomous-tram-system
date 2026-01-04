@@ -50,8 +50,8 @@ int joystick[4];
 void setup()
 
 {
- display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // инициализация дисплея по интерфейсу I2C, адрес 0x3C
-  display.clearDisplay(); // очистка дисплея
+ display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialisation of the display using I2C, address 0x3C
+  display.clearDisplay(); // clear the display
   radio.begin();
   radio.openWritingPipe(pipe);
   pinMode(2, INPUT);
@@ -60,8 +60,8 @@ void setup()
   digitalWrite(2, HIGH);
   digitalWrite(4, HIGH);
     digitalWrite(6, HIGH);
-  display.drawBitmap(0, 0, logoBmp, 128, 64, WHITE); // рисуем нашу картинку на экране
-  display.display(); // выводим её на OLED
+  display.drawBitmap(0, 0, logoBmp, 128, 64, WHITE); // draw the picture on the screen
+  display.display(); // display it on the screen
 }
 
 
@@ -73,20 +73,21 @@ void loop()
      
 if(digitalRead(3))
 {
-  joystick[0] = analogRead(JOYSTICK_Y);//motor
+  joystick[0] = analogRead(JOYSTICK_Y); //motor control
 }
 else
 {
-  joystick[0] = analogRead(A6);//motor
+  joystick[0] = analogRead(A6); //motor control
 }
                   
   
                   //joystick[2] = analogRead(JOYSTICK_Z);
                   //joystick[2] = map(joystick[2],0,1023,1,180);
-  joystick[1] = !digitalRead(2);//knopka
- joystick[2] = !digitalRead(4);//knopka stop
- joystick[3] = digitalRead(6);//revers
+  joystick[1] = !digitalRead(2); // autopilot button
+ joystick[2] = !digitalRead(4); // stop button
+ joystick[3] = digitalRead(6); // reverse button
   radio.write( joystick, sizeof(joystick) );
    
     
 }
+
