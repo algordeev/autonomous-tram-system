@@ -77,6 +77,8 @@ I significantly modified and expanded upon the base design to support the projec
     * Rail Cross-Intersections
     * Remote controller case
 
+ ![Tram and Remote Controller Prototype](images/tram_with_remote.jpg)
+
 
 ## Software
 
@@ -120,6 +122,16 @@ Wireless communication ensures coordination between tram and infrastructure.
 
 - Anti-jam door control system
 
+
+### System Logic in Action
+
+**1. Obstacle Detection & Emergency Stop**
+*(The tram detects an object via VL53L0X and halts immediately)*
+![Obstacle Avoidance Demo](images/tram_stop_animation.gif)
+
+**2. Autonomous Switching & RFID Logic**
+*(The system reads the RFID tag and switches the track automatically)*
+![Track Switching Demo](images/switch_animation.gif)
 
 
 ## Energy Efficiency Concepts
