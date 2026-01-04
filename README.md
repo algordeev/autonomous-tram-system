@@ -70,7 +70,7 @@ I significantly modified and expanded upon the base design to support the projec
 * **Modifications:** Redesigned the tram car and cabin details to mount the specific electronics.
 * **Original Designs:** I designed the following components from scratch:
     * Traffic Lights
-    * RFID Sensor Mounts
+    * RFID Sensor and Reed Switch Mounts
     * Rail Cross-Intersections
     * Remote controller case
 
