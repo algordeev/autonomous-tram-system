@@ -146,6 +146,7 @@ Wireless communication ensures coordination between tram and infrastructure.
 - Analysis of braking energy reuse for tram acceleration
 
 **Solar panels at the tram stops**
+
 ![Solar Panel demo](images/stop_solar_panel.gif)
 
 
