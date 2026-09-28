@@ -6,7 +6,6 @@
 ![Logo](images/logo.jpg)
 
 [![Watch Demo](https://img.shields.io/badge/YouTube-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/tfnsq6qUQj4)
-[![Digital Twin](https://img.shields.io/badge/Digital_Twin-Open_Simulator-00a86b?style=for-the-badge)](https://algordeev.github.io/autonomous-tram-digital-twin/)
 
 ## Overview
 
