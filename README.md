@@ -100,19 +100,73 @@ I significantly modified and expanded upon the base design to support the projec
 
 ## System Architecture
 
-The system uses multiple Arduino controllers responsible for:
+The prototype uses four Arduino Nano controllers. The remote communicates
+wirelessly with the tram, while the track switch and traffic lights react
+independently to RFID tags installed on the vehicles.
 
-- Tram movement and obstacle detection
+```mermaid
+flowchart TD
+    subgraph Remote["Remote Controller"]
+        Controls["Joystick and buttons"]
+        OLED["SSD1306 OLED"]
+        RemoteNano["Arduino Nano"]
+        RemoteRadio["NRF24L01"]
+        Controls --> RemoteNano
+        RemoteNano --> OLED
+        RemoteNano --> RemoteRadio
+    end
 
-- Switch and traffic light control
+    subgraph Tram["Tram Controller"]
+        TramRadio["NRF24L01"]
+        TramNano["Arduino Nano"]
+        Distance["VL53L0X distance sensor"]
+        Reed["Reed switch"]
+        Driver["TB6612FNG motor driver"]
+        Motor["DC geared motor"]
 
-- Stop management and intervals
+        TramRadio --> TramNano
+        Distance --> TramNano
+        Reed --> TramNano
+        TramNano --> Driver
+        Driver --> Motor
+    end
 
-- Emergency and manual override
+    subgraph Infrastructure["Autonomous Infrastructure"]
+        Tags["RFID tags on tram"]
+        SwitchRFID["MFRC522 reader"]
+        SwitchNano["Switch Arduino Nano"]
+        Servo["Track-switch servo"]
+        SignalRFID["MFRC522 reader"]
+        SignalNano["Traffic-light Arduino Nano"]
+        Lights["Two-direction signals"]
 
+        Tags --> SwitchRFID
+        SwitchRFID --> SwitchNano
+        SwitchNano --> Servo
 
+        Tags --> SignalRFID
+        SignalRFID --> SignalNano
+        SignalNano --> Lights
+    end
 
-Wireless communication ensures coordination between tram and infrastructure.
+    RemoteRadio <-->|"2.4 GHz control link"| TramRadio
+```
+
+### Control modes
+
+- **Manual mode:** the remote sends speed, direction and stop commands to the
+  tram over NRF24L01.
+- **Autonomous mode:** the tram maintains a fixed low speed, stops when the
+  VL53L0X detects an obstacle and performs the programmed stop sequence when
+  the reed switch is activated.
+- **Track switching:** RFID UIDs select one of the configured servo positions.
+- **Traffic-light control:** recognized RFID UIDs initiate the programmed
+  signal-change sequence.
+- **Emergency stop:** the stop command disables both motor-direction outputs.
+
+The infrastructure controllers do not currently exchange wireless messages
+with the tram controller. Coordination is achieved through physical RFID tags,
+the reed switch and predefined controller logic.
 
 
 
