@@ -5,7 +5,7 @@
 
 ![Logo](images/logo.jpg)
 
-[![Watch Demo](https://img.shields.io/badge/YouTube-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/tfnsq6qUQj4)
+<img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="20" style="vertical-align: middle;" /> [Watch the Project Demo on YouTube](https://youtu.be/tfnsq6qUQj4)
 
 ## Overview
 
