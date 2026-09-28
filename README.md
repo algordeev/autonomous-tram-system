@@ -191,3 +191,10 @@ This project was originally developed as an individual robotics competition proj
 
 It won the national World Robot Olympiad (WRO) final in Russia and was later presented at the international WRO 2021 final, where I represented my country.
 
+
+## Continued Development
+
+This physical prototype later evolved into the
+[Autonomous Tram Digital Twin](https://github.com/algordeev/autonomous-tram-digital-twin),
+which expands the original embedded-system concepts into multi-tram operations,
+passenger demand, dispatch control and traction-energy experiments.
