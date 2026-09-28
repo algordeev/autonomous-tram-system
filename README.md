@@ -1,3 +1,8 @@
+# Autonomous and Energy-Efficient Tram System
+
+> A physical Arduino-based prototype for autonomous tram control,
+> infrastructure coordination and safety experiments.
+
 ![Logo](images/logo.jpg)
 
 <img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="20" style="vertical-align: middle;" /> [Watch the Project Demo on YouTube](https://youtu.be/tfnsq6qUQj4)
