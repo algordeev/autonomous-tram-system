@@ -1,0 +1,31 @@
+Autonomous and Energy-Efficient Tram System
+Copyright (c) 2021-2026 Aleksandr Gordeev
+
+This repository contains material under two licenses. Commercial use of
+any part of this repository is not permitted without prior written
+permission from the author.
+
+1. Firmware (firmware/)
+   PolyForm Noncommercial License 1.0.0
+   Full text: LICENSES/PolyForm-Noncommercial-1.0.0.txt
+   Required Notice: Copyright (c) 2021-2026 Aleksandr Gordeev
+   (https://github.com/algordeev/autonomous-tram-system)
+
+2. Hardware design files (schemes/: schematics and PCB layouts),
+   images (images/) and documentation (README files)
+   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+   (CC BY-NC-SA 4.0)
+   Full text: LICENSES/CC-BY-NC-SA-4.0.txt
+   https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Not covered by these licenses
+- The tram body, rails and turnout base designs by Depronized
+  (OS-Railway, Thingiverse) are licensed by their author under
+  CC BY-NC 4.0. No 3D model files (original or modified) are included
+  in this repository. See "Mechanical Design & Credits" in README.md.
+- Third-party Arduino libraries used by the firmware (e.g. RF24,
+  MFRC522, Adafruit GFX/SSD1306, VL53L0X, Servo, SPI, Wire) are not
+  included and remain under their own licenses.
+
+For commercial licensing enquiries, contact the author via GitHub
+(https://github.com/algordeev).

@@ -1,0 +1,273 @@
+# Autonomous and Energy-Efficient Tram System
+
+> A physical Arduino-based prototype for autonomous tram control,
+> infrastructure coordination and safety experiments.
+
+![Logo](images/logo.jpg)
+
+<img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="20" style="vertical-align: middle;" /> [Watch the Project Demo on YouTube](https://youtu.be/tfnsq6qUQj4)
+
+## Overview
+
+This project is a fully autonomous tram system prototype developed individually as an embedded systems engineering project.
+
+
+
+The system demonstrates autonomous vehicle control, infrastructure automation, and energy efficiency solutions for urban rail transport under real-time and hardware constraints.
+
+
+
+The prototype includes automated tram control, traffic lights, switches, stops, and an energy recovery concept implemented using embedded systems.
+
+
+
+## Objectives
+
+- Develop autonomous and remote tram control
+
+- Automate tram infrastructure (switches, traffic lights, stops)
+
+- Build a working physical prototype
+
+- Analyze energy consumption and recovery in tram systems
+
+
+
+## Hardware
+
+<p align="center">
+  <img src="images/project_composition.png" alt="Project Composition" width="95%">
+</p>
+
+- Arduino Nano (multiple controllers)
+
+- Motor driver: TB6612FNG
+
+- Wireless communication: NRF24L01
+
+- Laser rangefinder: VL53L0X
+
+- Reed switches, potentiometers
+
+- Servo motors (switches)
+
+- DC motor with gearbox
+
+- Custom PCB (designed in EasyEDA)
+
+- 3D-printed tram body, rails, infrastructure
+
+
+## Mechanical Design & Credits
+
+The physical prototype is constructed using a hybrid of open-source assets and custom-engineered parts.
+
+**External Assets (Tram, Rails & Turnout)**
+The base designs for the **Tram Body**, **Rails** and **Turnout** were created by **Depronized** as part of OS-Railway.
+* **Sources:**
+  * [A35 Tram for OS-Railway (Thingiverse)](https://www.thingiverse.com/thing:3194215)
+  * [Train tracks for OS-Railway (Thingiverse)](https://www.thingiverse.com/thing:2146361)
+  * [Turnout for OS-Railway (Thingiverse)](https://www.thingiverse.com/thing:2619888)
+* **License:** [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (Creative Commons – Attribution – Non-Commercial), by Depronized
+* *Note: 3D model files (original or modified) are not included in this repository. These designs are not covered by this repository's licenses; please refer to the source links above for the original designs.*
+
+**Modifications & Custom Engineering**
+I significantly modified and expanded upon the base design to support the project requirements:
+* **Modifications:** Redesigned the tram car and cabin details to mount the specific electronics.
+* **Original Designs:** I designed the following components from scratch:
+    * Traffic Lights
+    * RFID Sensor and Reed Switch Mounts
+    * Rail Cross-Intersections
+    * Remote controller case
+
+<p align="center">
+  <img src="images/tram_with_remote.jpg" alt="Tram and Remote Controller Prototype" width="1000%">
+</p>
+
+
+
+## Software
+
+- Language: C++
+
+- Platform: Arduino
+
+- Modular control logic for tram and infrastructure
+
+- Real-time loop-based control without external frameworks
+
+
+
+## System Architecture
+
+The prototype uses four Arduino Nano controllers. The remote communicates
+wirelessly with the tram, while the track switch and traffic lights react
+independently to RFID tags installed on the vehicles.
+
+```mermaid
+flowchart TD
+    subgraph Remote["Remote Controller"]
+        Controls["Joystick and buttons"]
+        OLED["SSD1306 OLED"]
+        RemoteNano["Arduino Nano"]
+        RemoteRadio["NRF24L01"]
+        Controls --> RemoteNano
+        RemoteNano --> OLED
+        RemoteNano --> RemoteRadio
+    end
+
+    subgraph Tram["Tram Controller"]
+        TramRadio["NRF24L01"]
+        TramNano["Arduino Nano"]
+        Distance["VL53L0X distance sensor"]
+        Reed["Reed switch"]
+        Driver["TB6612FNG motor driver"]
+        Motor["DC geared motor"]
+
+        TramRadio --> TramNano
+        Distance --> TramNano
+        Reed --> TramNano
+        TramNano --> Driver
+        Driver --> Motor
+    end
+
+    subgraph Infrastructure["Autonomous Infrastructure"]
+        Tags["RFID tags on tram"]
+        SwitchRFID["MFRC522 reader"]
+        SwitchNano["Switch Arduino Nano"]
+        Servo["Track-switch servo"]
+        SignalRFID["MFRC522 reader"]
+        SignalNano["Traffic-light Arduino Nano"]
+        Lights["Two-direction signals"]
+
+        Tags --> SwitchRFID
+        SwitchRFID --> SwitchNano
+        SwitchNano --> Servo
+
+        Tags --> SignalRFID
+        SignalRFID --> SignalNano
+        SignalNano --> Lights
+    end
+
+    RemoteRadio <-->|"2.4 GHz control link"| TramRadio
+```
+
+### Control modes
+
+- **Manual mode:** the remote sends speed, direction and stop commands to the
+  tram over NRF24L01.
+- **Autonomous mode:** the tram maintains a fixed low speed, stops when the
+  VL53L0X detects an obstacle and performs the programmed stop sequence when
+  the reed switch is activated.
+- **Track switching:** RFID UIDs select one of the configured servo positions.
+- **Traffic-light control:** recognized RFID UIDs initiate the programmed
+  signal-change sequence.
+- **Emergency stop:** the stop command disables both motor-direction outputs.
+
+The infrastructure controllers do not currently exchange wireless messages
+with the tram controller. Coordination is achieved through physical RFID tags,
+the reed switch and predefined controller logic.
+
+
+
+## Key Algorithms and Logic
+
+- Autonomous navigation along rails
+
+- Obstacle detection and emergency stop using laser rangefinder
+
+- Fixed-interval tram scheduling independent of entry point
+
+- Fail-safe logic with manual control fallback
+
+- Anti-jam door control system
+
+
+### System Logic in Action
+
+**1. Obstacle Detection & Emergency Stop**
+*(The tram detects an object via VL53L0X and halts immediately)*
+![Obstacle Avoidance Demo](images/tram_stop_animation.gif)
+
+**2. Autonomous Switching & RFID Logic**
+*(The system reads the RFID tag and switches the track automatically)*
+![Track Switching Demo](images/switch_animation.gif)
+
+
+## Energy Efficiency Concepts
+
+- Regenerative braking with flywheel energy storage (FES)
+
+- Energy harvesting at stops using piezoelectric elements
+
+- Solar panels on stops for auxiliary power
+
+- Analysis of braking energy reuse for tram acceleration
+
+**Solar panels at the tram stops**
+
+![Solar Panel demo](images/stop_solar_panel.gif)
+
+
+
+## Challenges and Engineering Decisions
+
+- Sensor noise handled with thresholding and filtering
+
+- Real-time constraints addressed by optimized control loops
+
+- Safety prioritized through manual override and system isolation
+
+- Cost optimization using low-cost embedded components
+
+
+
+## Results
+
+- Fully working autonomous tram prototype
+
+- Automated infrastructure interaction
+
+- Demonstrated feasibility of energy recovery
+
+
+
+## What I Would Improve Today
+
+- Transition to a formal state machine architecture
+
+- More robust sensor fusion
+
+- CAN or RS485 instead of NRF for industrial reliability
+
+- Improved modularity and scalability
+
+
+
+## Background
+
+This project was originally developed as an individual robotics competition project.
+
+It won the national World Robot Olympiad (WRO) final in Russia and was later presented at the international WRO 2021 final, where I represented my country.
+
+
+## Continued Development
+
+This physical prototype later evolved into the
+[Autonomous Tram Digital Twin](https://github.com/algordeev/autonomous-tram-digital-twin),
+which expands the original embedded-system concepts into multi-tram operations,
+passenger demand, dispatch control and traction-energy experiments.
+
+
+## License
+
+© 2021–2026 Aleksandr Gordeev. **Non-commercial use only.**
+
+| Part | License |
+|---|---|
+| Firmware (`firmware/`) | [PolyForm Noncommercial 1.0.0](LICENSES/PolyForm-Noncommercial-1.0.0.txt) |
+| Schematics and PCB layouts (`schemes/`), images, documentation | [CC BY-NC-SA 4.0](LICENSES/CC-BY-NC-SA-4.0.txt) |
+
+Personal, educational and research use is welcome. Commercial use of any part requires prior written permission from the author.
+Third-party designs (tram body, rails, turnout by Depronized) and Arduino libraries are not covered by these licenses and keep their own terms. See [LICENSE](LICENSE) for details.
+
