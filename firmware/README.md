@@ -7,7 +7,7 @@ the physical autonomous tram prototype.
 
 | Firmware | Controller role |
 | --- | --- |
-| [`tram_controller.ino`](tram_controller.ino) | Drives the tram motor, receives commands from the remote controller, reads the VL53L0X distance sensor and handles the reed-switch stop sequence. |
+| [`tram_controller.ino`](tram_controller.ino) | Drives the tram motor, receives commands from the remote controller, reads the VL53L0X distance sensor, runs the reed-switch stop sequence without blocking, and stops the motor on radio loss or sensor failure. |
 | [`remote_controller.ino`](remote_controller.ino) | Reads the joystick and control buttons, transmits commands to the tram over NRF24L01 and shows the driver display (mode, direction, STOP) on the OLED. |
 | [`switch_controller.ino`](switch_controller.ino) | Reads RFID tags and moves the track-switch servo to the configured position. |
 | [`traffic_lights_controller.ino`](traffic_lights_controller.ino) | Reads RFID tags and runs the two-direction traffic-light sequence. |
@@ -59,9 +59,18 @@ power.
 | A5 | VL53L0X SCL (I2C) | implicit |
 
 The autonomous mode uses a **70 mm** obstacle threshold. When the reed switch
-is activated, the current implementation runs the tram slowly for 2 seconds,
-then stops it for 5 seconds. These intervals are blocking because they use
-`delay()`.
+is activated, the tram rolls slowly for 2 seconds and then stands for 5 seconds.
+These intervals are timer-based (`millis()`), so the stop button, a switch to
+manual mode and the radio-loss check keep working during the stop sequence.
+
+Fail-safe behavior of the tram controller:
+
+| Condition | Result |
+| --- | --- |
+| No valid command packet for 300 ms (remote off, out of range, battery dead) | Motor stops; the tram resumes when valid packets return |
+| Stop button pressed | Motor stops immediately, also during the stop sequence |
+| Distance sensor missing at boot, or a reading times out | Autopilot stops the tram (manual driving still works) |
+| Packet with wrong marker, checksum, reserved flags or out-of-range throttle | Ignored, and does not count as a sign of life |
 
 ### Remote controller
 
@@ -128,20 +137,23 @@ The tram and remote sketches must use the same pipe address:
 const uint64_t pipe = 0xE8E8F0F0E1LL;
 ```
 
-Both controllers currently use CE pin D7 and CSN pin D8. The remote transmits
-an array of four AVR `int` values:
+Both controllers currently use CE pin D7 and CSN pin D8. The remote sends a
+packed 5-byte `Command` structure on every loop:
 
-| Array item | Meaning |
-| --- | --- |
-| `joystick[0]` | Motor command read from A7 or A6 |
-| `joystick[1]` | Autopilot button state |
-| `joystick[2]` | Emergency-stop button state |
-| `joystick[3]` | Direction/reverse state |
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `magic` | `uint8_t` | Constant `0xA7` marking a tram command |
+| `flags` | `uint8_t` | Bit 0 autopilot button, bit 1 stop button, bit 2 level of the direction input (D6), bits 3-7 reserved (must be 0) |
+| `throttle` | `uint16_t` | Joystick reading from A7 or A6, 0-1023 |
+| `crc` | `uint8_t` | CRC-8 (polynomial `0x07`) over the previous four bytes |
 
-Because this is a raw binary array, both radios must be connected to compatible
-AVR-based controllers using the same data layout. If the protocol is later
-ported to another architecture, replace the array with a packed structure that
-uses fixed-width integer types.
+The NRF24L01 hardware already protects each frame with its own CRC. The marker,
+reserved bits, range check and CRC-8 additionally reject packets from other
+devices on the same address and packets from firmware with a different layout
+(for example an old remote with a new tram). **Flash the tram and the remote
+together after any change to this structure**; the definition is duplicated
+between `tram_controller.ino` and `remote_controller.ino` and must stay
+identical. The link is not encrypted or authenticated.
 
 NRF24L01 modules require a stable **3.3 V** supply. Add local decoupling near
 the module and do not power it from 5 V.
@@ -176,7 +188,8 @@ following order makes commissioning safer and easier to diagnose:
 3. **Tram controller** — lift the driven wheels from the track and verify stop,
    direction, obstacle detection and reed-switch behavior.
 4. **Remote controller** — power both radio nodes and confirm manual control,
-   emergency stop and autonomous mode.
+   emergency stop and autonomous mode. Then switch the remote off while the
+   tram is moving and confirm that the tram stops within about 0.3 seconds.
 
 Connect and upload to one Arduino at a time. Disconnect motor power while
 uploading and confirm that all controllers share the required ground reference.
