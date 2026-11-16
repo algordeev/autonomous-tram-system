@@ -8,7 +8,7 @@ the physical autonomous tram prototype.
 | Firmware | Controller role |
 | --- | --- |
 | [`tram_controller.ino`](tram_controller.ino) | Drives the tram motor, receives commands from the remote controller, reads the VL53L0X distance sensor and handles the reed-switch stop sequence. |
-| [`remote_controller.ino`](remote_controller.ino) | Reads the joystick and control buttons, displays the startup graphic on the OLED and transmits commands to the tram over NRF24L01. |
+| [`remote_controller.ino`](remote_controller.ino) | Reads the joystick and control buttons, transmits commands to the tram over NRF24L01 and shows the driver display (mode, direction, STOP) on the OLED. |
 | [`switch_controller.ino`](switch_controller.ino) | Reads RFID tags and moves the track-switch servo to the configured position. |
 | [`traffic_lights_controller.ino`](traffic_lights_controller.ino) | Reads RFID tags and runs the two-direction traffic-light sequence. |
 
@@ -29,7 +29,7 @@ compiling the sketches.
 | `RF24` by TMRh20 | Tram, remote | NRF24L01 radio communication. |
 | `VL53L0X` by Pololu | Tram | Time-of-flight distance sensor. |
 | `Adafruit GFX Library` | Remote | OLED graphics dependency. |
-| `Adafruit SSD1306` | Remote | SSD1306 OLED driver. The sketch uses the legacy `Adafruit_SSD1306 display(OLED_RESET)` constructor; a small constructor update may be needed with recent library versions. |
+| `Adafruit SSD1306` | Remote | SSD1306 OLED driver (128×64). Uses the current `Adafruit_SSD1306(width, height, &Wire, reset)` constructor. |
 | `MFRC522` by GithubCommunity / miguelbalboa | Switch, traffic lights | RFID reader support. |
 | `Servo` | Switch | Included with the Arduino AVR core. |
 | `SPI` and `Wire` | Several controllers | Included with the Arduino AVR core. |
