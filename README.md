@@ -157,12 +157,13 @@ flowchart TD
 - **Manual mode:** the remote sends speed, direction and stop commands to the
   tram over NRF24L01.
 - **Autonomous mode:** the tram maintains a fixed low speed, stops when the
-  VL53L0X detects an obstacle and performs the programmed stop sequence when
-  the reed switch is activated.
+  VL53L0X detects an obstacle or fails, and performs the programmed stop
+  sequence when the reed switch is activated.
 - **Track switching:** RFID UIDs select one of the configured servo positions.
 - **Traffic-light control:** recognized RFID UIDs initiate the programmed
   signal-change sequence.
 - **Emergency stop:** the stop command disables both motor-direction outputs.
+  The tram also stops by itself if it receives no valid command for 300 ms.
 
 The infrastructure controllers do not currently exchange wireless messages
 with the tram controller. Coordination is achieved through physical RFID tags,
