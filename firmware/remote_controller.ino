@@ -22,6 +22,34 @@ const uint64_t pipe = 0xE8E8F0F0E1LL;
 RF24 radio(7, 8);
 int joystick[4];
 
+/* ---- Command packet (remote -> tram). Keep identical to remote_controller.ino ---- */
+const uint8_t CMD_MAGIC    = 0xA7;
+const uint8_t FLAG_AUTO    = 0x01;   // autopilot button
+const uint8_t FLAG_STOP    = 0x02;   // stop button
+const uint8_t FLAG_REV_HI  = 0x04;   // level of the direction input (D6)
+const uint8_t FLAG_RESERVED = 0xF8;  // must be zero
+
+struct __attribute__((packed)) Command {
+  uint8_t  magic;
+  uint8_t  flags;
+  uint16_t throttle;   // joystick reading, 0-1023
+  uint8_t  crc;        // CRC-8 (poly 0x07) over the four bytes above
+};
+
+static_assert(sizeof(Command) == 5, "Command must be exactly 5 bytes");
+
+uint8_t crc8(const uint8_t *data, uint8_t len)
+{
+  uint8_t crc = 0;
+  while (len--) {
+    crc ^= *data++;
+    for (uint8_t i = 0; i < 8; i++)
+      crc = (crc & 0x80) ? (uint8_t)((crc << 1) ^ 0x07) : (uint8_t)(crc << 1);
+  }
+  return crc;
+}
+/* ---- end of shared packet definition ---- */
+
 bool oledOk = false;          // false if the display failed to start (driving still works)
 int shownKey = -1;            // what is currently on the screen
 unsigned long lastUiMs = 0;
@@ -114,7 +142,13 @@ void loop()
   joystick[2] = !digitalRead(4);           // stop button
   joystick[3] = digitalRead(6);            // reverse button
 
-  radio.write(joystick, sizeof(joystick)); // sent every loop, as originally
+  Command pkt;                             // sent every loop, as originally
+  pkt.magic    = CMD_MAGIC;
+  pkt.flags    = (joystick[1] ? FLAG_AUTO : 0) | (joystick[2] ? FLAG_STOP : 0)
+               | (joystick[3] ? FLAG_REV_HI : 0);
+  pkt.throttle = joystick[0];
+  pkt.crc      = crc8((const uint8_t *)&pkt, sizeof(pkt) - 1);
+  radio.write(&pkt, sizeof(pkt));
 
   if (oledOk) updateScreen();
 }
